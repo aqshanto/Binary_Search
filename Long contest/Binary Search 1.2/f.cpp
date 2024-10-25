@@ -3,6 +3,10 @@ using namespace std;
 #define int long long
 #define endl "\n"
 double pi= 3.141592653589793238462643383279;
+/*
+7 13
+6 8 14 9 4 11 10
+*/
 
 void solve(){
     int n,t;
@@ -11,14 +15,20 @@ void solve(){
     for(int i=0;i<n;i++){
         cin>>ar[i];
     }
+
     vector<int>pre(n,0);
-    int j=0;
-    for(int i=n-1;i>=0;--i){
-        if(i==n-1)pre[j]=ar[i];
-        else
-            pre[j]=pre[j-1]+ar[i];
+    pre[0]=ar[n-1];
+    int j=1;
+    for(int i=n-2;i>=0;--i){
+        pre[j]=pre[j-1]+ar[i];
         j++;
     }
+
+    for(int i=0;i<n;i++){
+        cout<<pre[i]<<" ";
+    }
+    cout<<endl;
+
     int lo=0,hi=n-1,mid,ans=-1;
     while(lo<=hi){
         mid=(lo+hi)/2;
@@ -28,11 +38,14 @@ void solve(){
         }else if(pre[mid]<t){
             ans=mid;
             lo=mid+1;
-        }else{
+        }
+        else if(pre[mid]>t){
             hi=mid-1;
         }
     }
-    cout<<ans+1<<endl;
+
+    ans++;
+    cout<<ans<<endl;
 }
 
 signed main(){
